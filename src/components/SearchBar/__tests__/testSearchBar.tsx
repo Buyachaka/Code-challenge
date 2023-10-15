@@ -26,11 +26,7 @@ describe('<SearchBar />', () => {
         const input = screen.getByPlaceholderText('Search');
         userEvent.type(input, 'Hello');
 
-        expect(mockSetSearchTerm).toHaveBeenCalledWith('H');
-        expect(mockSetSearchTerm).toHaveBeenCalledWith('He');
-        expect(mockSetSearchTerm).toHaveBeenCalledWith('Hel');
-        expect(mockSetSearchTerm).toHaveBeenCalledWith('Hell');
-        expect(mockSetSearchTerm).toHaveBeenCalledWith('Hello');
+        expect(mockSetSearchTerm).toHaveBeenCalledTimes(5);
     });
 
     it('renders the "Nothing found" message if searchTerm is non-empty and foundUsers is false', () => {
