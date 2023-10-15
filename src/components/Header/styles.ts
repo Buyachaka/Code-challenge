@@ -9,7 +9,6 @@ export const HeaderContainer = styled.div`
     justify-content: space-between;
 `;
 
-export const Title = styled.h1``;
 
 export const NavigationHeader = styled.div`
     display: flex;
