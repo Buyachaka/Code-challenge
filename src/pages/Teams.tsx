@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {ListItem, Teams as TeamsList} from 'types';
 import {getTeams as fetchTeams} from '../api';
 import Header from '../components/Header';
