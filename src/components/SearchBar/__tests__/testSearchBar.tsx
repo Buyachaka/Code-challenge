@@ -13,8 +13,9 @@ describe('<SearchBar />', () => {
     });
 
     it('does not render the input when loading', () => {
-        render(<SearchBar searchTerm="" setSearchTerm={() => {
-        }} isLoading foundUsers/>);
+        const mockSetSearchTerm = jest.fn();
+
+        render(<SearchBar searchTerm="" setSearchTerm={mockSetSearchTerm} isLoading foundUsers/>);
         const input = screen.queryByPlaceholderText('Search');
         expect(input).not.toBeInTheDocument();
     });
