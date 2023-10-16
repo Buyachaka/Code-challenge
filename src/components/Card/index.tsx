@@ -1,40 +1,40 @@
-import * as React from 'react';
+import React from 'react';
 import {useNavigate} from 'react-router-dom';
-import {Teams, UserData} from 'types';
+import {ListItemColumn, Teams, UserData} from 'types';
 import {Container} from './styles';
 
 interface Props {
     id?: string;
     url?: string;
-    columns: Array<{
-        key: string;
-        value: string;
-    }>;
+    columns: ListItemColumn[];
     hasNavigation?: boolean;
     navigationProps?: UserData | Teams;
 }
 
+
 const Card = ({
-    id,
-    columns,
-    url,
-    hasNavigation = true,
-    navigationProps = null,
-}: Props): JSX.Element => {
+                  id,
+                  columns,
+                  url,
+                  hasNavigation = true,
+                  navigationProps = null,
+              }: Props) => {
     const navigate = useNavigate();
+
+    const handleNavigation = (event: React.MouseEvent) => {
+        if (hasNavigation && url) {
+            navigate(url, {
+                state: navigationProps,
+            });
+        }
+        event.preventDefault();
+    };
 
     return (
         <Container
             data-testid={`cardContainer-${id}`}
             hasNavigation={hasNavigation}
-            onClick={(e: Event) => {
-                if (hasNavigation) {
-                    navigate(url, {
-                        state: navigationProps,
-                    });
-                }
-                e.preventDefault();
-            }}
+            onClick={handleNavigation}
         >
             {columns.map(({key: columnKey, value}) => (
                 <p key={columnKey}>

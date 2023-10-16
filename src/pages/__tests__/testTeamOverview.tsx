@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {render, screen, waitFor} from '@testing-library/react';
 import * as API from '../../api';
 import TeamOverview from '../TeamOverview';
@@ -6,7 +6,7 @@ import TeamOverview from '../TeamOverview';
 jest.mock('react-router-dom', () => ({
     useLocation: () => ({
         state: {
-            teamName: 'Some Team',
+            name: 'Some Team',
         },
     }),
     useNavigate: () => ({}),
@@ -28,7 +28,7 @@ describe('TeamOverview', () => {
         jest.useRealTimers();
     });
 
-    it('should render team overview users', async () => {
+    it('should render spinner until team overview users are loaded', async () => {
         const teamOverview = {
             id: '1',
             teamLeadId: '2',
@@ -42,13 +42,14 @@ describe('TeamOverview', () => {
             location: '',
             avatar: '',
         };
-        jest.spyOn(API, 'getTeamOverview').mockImplementationOnce(() => Promise.resolve({} as any));
-        jest.spyOn(API, 'getUserData').mockImplementationOnce(() => Promise.resolve({} as any));
 
-        render(<TeamOverview />);
+        jest.spyOn(API, 'getTeamOverview').mockImplementationOnce(() => Promise.resolve(teamOverview));
+        jest.spyOn(API, 'getUserData').mockImplementation((id) => Promise.resolve({...userData, id}));
 
-        await waitFor(() => {
-            expect(screen.queryAllByText('userData')).toHaveLength(4);
-        });
+        render(<TeamOverview/>);
+        expect(screen.getByTestId('spinner')).toBeInTheDocument();
+
+        const allUserDataElems = await screen.findAllByText('userData');
+        expect(allUserDataElems).toHaveLength(4);
     });
 });

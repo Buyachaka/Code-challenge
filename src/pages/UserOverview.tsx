@@ -1,36 +1,41 @@
-import * as React from 'react';
+import React from 'react';
 import {useLocation} from 'react-router-dom';
 import {UserData} from 'types';
 import Card from '../components/Card';
 import {Container} from '../components/GlobalComponents';
 import Header from '../components/Header';
 
-var mapU = (user: UserData) => {
-    var columns = [
+const mapUserDataToCard = (user: UserData) => {
+    const {firstName, lastName, displayName, location} = user;
+    return [
         {
             key: 'Name',
-            value: `${user.firstName} ${user.lastName}`,
+            value: `${firstName} ${lastName}`,
         },
         {
             key: 'Display Name',
-            value: user.displayName,
+            value: displayName,
         },
         {
             key: 'Location',
-            value: user.location,
+            value: location,
         },
     ];
-    return <Card columns={columns} hasNavigation={false} navigationProps={user} />;
 };
 
 const UserOverview = () => {
-    const location = useLocation();
+    const {state} = useLocation();
+
+    if (!state) {
+        return <div>User not found</div>;
+    }
+
+    const {firstName, lastName} = state;
+
     return (
         <Container>
-            <Header
-                title={`User ${location.state.firstName} ${location.state.lastName}`}
-            />
-            {mapU(location.state)}
+            <Header title={`User ${firstName} ${lastName}`}/>
+            <Card columns={mapUserDataToCard(state)} hasNavigation={false} navigationProps={state}/>
         </Container>
     );
 };

@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import {useNavigate} from 'react-router-dom';
-import {HeaderContainer, NavigationHeader, BackButton, Title} from './styles';
+import {HeaderContainer, NavigationHeader, BackButton} from './styles';
 
 interface Props {
     title: string;
@@ -13,15 +13,13 @@ const Header = ({title, showBackButton = true}: Props) => {
         <HeaderContainer>
             <NavigationHeader>
                 {showBackButton && (
-                    <BackButton
-                        onClick={() => {
-                            navigate(-1);
-                        }}
-                    >
+                    <BackButton onClick={() => {
+                        navigate(-1);
+                    }}>
                         🔙
                     </BackButton>
                 )}
-                <Title>{title}</Title>
+                <h1>{title}</h1>
             </NavigationHeader>
         </HeaderContainer>
     );
