@@ -1,7 +1,5 @@
 # Tempo Frontend challenge
 
-# Solution Improvement
-
 ### Improvements:
   # Fixed class types definitions that were vague
   # Fixed some unit tests that were not testing what they should
